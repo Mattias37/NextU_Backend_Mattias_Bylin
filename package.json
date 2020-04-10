@@ -1,0 +1,19 @@
+{
+  "name": "nextu_backend_mattias_bylin",
+  "version": "1.0.0",
+  "description": "Examen final de Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mattias Bylin",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.14.0",
+    "httpdispatcher": "^2.0.1",
+    "jquery": "^3.1.1",
+    "socket.io": "^1.7.2",
+    "socket.io-client": "^1.7.2"
+  }
+}
