@@ -14,7 +14,8 @@ function setSearch() {
   busqueda.on('change', (e) => {
     if (this.customSearch == false) {
       this.customSearch = true
-    } else {
+
+    } else if(this.customSearch == true) {
       this.customSearch = false
     }
     $('#personalizada').toggleClass('invisible')
@@ -34,9 +35,10 @@ setSearch();
         console.log('hola2');
         var self = this;
         self.cargaCiudades();
-        self.cargarCasas();
+
         $("div[name='clasificado']").empty("");
         $("#buscar").click(function(){
+          self.cargarCasas();
           var ciudad = $("#ciudad").val();
           var precio = $('#rangoPrecio').val();
           var filter = {Ciudad: ciudad, /*Tipo: tipo,*/ Precio: precio}
@@ -106,9 +108,9 @@ setSearch();
                                                        .replace(":Tipo:",casa.Tipo);
                  var $control = self.$clasificadoTemp.clone().html(htmlNew);
                  if (filter === undefined) {
-                   $casas.append( $control );
-                 }else {
-                   console.log('filter no es undefined')
+                   alert('busca mas info');
+                 }else{
+                   console.log(filter)
                    var show = (filter.Ciudad ===undefined || filter.Ciudad =="" || filter.Ciudad == casa.Ciudad);
                    var precio = filter.Precio.split(";");
                    var precioCasa = casa.Precio.replace("$","").replace(",","");
