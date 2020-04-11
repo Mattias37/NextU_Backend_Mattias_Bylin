@@ -67,10 +67,6 @@ setSearch();
             .done(data=>{
               var $casas = $("#casas");
                $.each(data, (i,casa)=>{
-                 console.log(data)
-                 console.log(casa)
-                 console.log(casa.Id)
-                 console.log(casa.Direccion)
                  var htmlNew = self.$clasificadoTemp.html().replace(":Direccion:",casa.Direccion)
                                                         .replace(":Ciudad:",casa.Ciudad)
                                                         .replace(":Telefono:",casa.Telefono)
@@ -84,6 +80,31 @@ setSearch();
             .fail(err=>{
               console.log(err);
             });
+      },
+      customSearch: function(filter){
+        var self = this;
+        self.ajaxRequest('/Filtros/data', 'GET', {})
+            .done(function(data){
+              var $casas = $("#casas");
+              $casas.html("");
+              $.each(data, (i,casa)=>{
+                var htmlNew = self.$clasificadoTemp.html().replace(":Direccion:",casa.Direccion)
+                                                       .replace(":Ciudad:",casa.Ciudad)
+                                                       .replace(":Telefono:",casa.Telefono)
+                                                       .replace(":Codigo_Postal:",casa.Codigo_Postal)
+                                                       .replace(":Precio:",casa.Precio)
+                                                       .replace(":Tipo:",casa.Tipo);
+                 var $control = self.$clasificadoTemp.clone().html(htmlNew);
+                 if (filter === undefined) {
+                   $casas.append( $control );
+                 }else {
+                   console.log('filter no es undefined')
+                 }
+
+             })
+
+            })
+
       }
     }
   })()
