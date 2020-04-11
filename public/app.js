@@ -35,18 +35,20 @@ setSearch();
         console.log('hola2');
         var self = this;
         self.cargaCiudades();
+        self.cargarTipos();
 
         $("div[name='clasificado']").empty("");
         $("#buscar").click(function(){
           self.cargarCasas();
           var ciudad = $("#ciudad").val();
+          var tipo = $("#tipo").val();
           var precio = $('#rangoPrecio').val();
-          var filter = {Ciudad: ciudad, /*Tipo: tipo,*/ Precio: precio}
+          var filter = {Ciudad: ciudad, Tipo: tipo, Precio: precio}
           self.customSearch(filter);
         })
         $("#tipo, #ciudad, #rangoPrecio").change(()=>{
           var ciudad = $("#ciudad").val();
-          //var tipo = $("#tipo").val();
+          var tipo = $("#tipo").val();
           var precio = $("#rangoPrecio").val();
           var filter = {Ciudad: ciudad, Tipo: tipo, Precio: precio}
           self.customSearch(filter);
@@ -93,6 +95,20 @@ setSearch();
               console.log(err);
             });
       },
+      cargarTipos: function(){
+        var self = this;
+        console.log('Hola')
+        self.ajaxRequest('/Filtros/tipos', 'GET', {})
+            .done(function(data){
+              console.log(data);
+              $.each(data, function(i, tipo){
+                console.log(data)
+                $('#tipo').append(`<option value="${tipo}">${tipo}</option>`);
+              })
+            }).fail(function(err){
+              console.log(err);
+            })
+      },
       customSearch: function(filter){
         var self = this;
         self.ajaxRequest('/Filtros/data', 'GET', {})
@@ -112,12 +128,14 @@ setSearch();
                  }else{
                    console.log(filter)
                    var show = (filter.Ciudad ===undefined || filter.Ciudad =="" || filter.Ciudad == casa.Ciudad);
+                   var show = show && (filter.Tipo ===undefined || filter.Tipo =="" || filter.Tipo == casa.Tipo);
                    var precio = filter.Precio.split(";");
                    var precioCasa = casa.Precio.replace("$","").replace(",","");
                    var show = show && ( precioCasa >= precio[0] && precioCasa <= precio[1]);
                    console.log(`Ciudad:${filter.Ciudad}, Tipo: ${filter.Tipo}, Precio: ${precio}, precioCasa: ${precioCasa}, Show: ${show}`);
                    if (show) {
                      $casas.append( $control );
+                     console.log(show);
                    }
                  }
 

@@ -9,7 +9,7 @@ var bodyParser = require('body-parser')
     Almacenamiento = require('../Almacenamiento')
 //Filtrar las ciudades de get info de almacenamiento que a su vez traen la info de data.json
 Router.get("/ciudades", function(req, res){
-  Almacenamiento.getInfo('ciudades').then(console.log('ciudad bro'))
+  Almacenamiento.getInfo('ciudades')
                 .then(function(ciudades){
                   console.log('CIUDADES!!!')
                   var ciudadesUnique = [];
@@ -25,6 +25,22 @@ Router.get("/ciudades", function(req, res){
                   console.log('error filto ciudades')
                 })
 
+})
+Router.get("/tipos", (req, res)=>{
+  Almacenamiento.getInfo('tipos')
+                .then(function(tipos){
+                  var tiposUnique = [];
+                  tipos.forEach(function(o){
+                    if(tiposUnique.indexOf(o.Tipo) < 0){
+                      tiposUnique.push(o.Tipo);
+                    }
+                  })
+                  res.json(tiposUnique);
+                  console.log('exito tipo');
+                }).catch(function(error){
+                  console.log('paila tipo')
+                  res.sendStatus(500).json(error);
+                  })
 })
 Router.get("/data", (req, res)=>{
   Almacenamiento.getInfo('data')
