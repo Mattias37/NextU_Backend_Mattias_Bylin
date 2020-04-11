@@ -17,7 +17,7 @@ var PORT = 4200
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, '../public')))
-//app.use('/Filtros', filtro)
+app.use('/Filtros', filtro)
 
 Server.listen(PORT, function(){
   console.log('Ya esta disponible: '+ PORT)

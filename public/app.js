@@ -21,32 +21,33 @@ function setSearch() {
   })
 }
 
-setSearch()
+setSearch();
 
 
 (function(document, window, undefined, $){
   (function(){
     return Filtros = {
-      io: io(),
+      //io: io(),
       $clasificadoTemp: $("div[name='clasificado']").clone(),
       //Init es la función constructura
       Init: function(){
+        console.log('hola2');
         var self = this;
         self.cargaCiudades();
         self.cargarCasas();
         $("div[name='clasificado']").empty("");
         $("#buscar").click(function(){
           var ciudad = $("#ciudad").val();
-          var filter = {Ciudad: ciudad, Tipo: tipo, Precio: precio}
+          var filter = {Ciudad: ciudad, /*Tipo: tipo, Precio: precio*/}
           self.customSearch(filter);
         })
         $("#tipo, #ciudad, #rangoPrecio").change(()=>{
           var ciudad = $("#ciudad").val();
-          var tipo = $("#tipo").val();
+          //var tipo = $("#tipo").val();
           var precio = $("#rangoPrecio").val();
           var filter = {Ciudad: ciudad, Tipo: tipo, Precio: precio}
           self.customSearch(filter);
-        }
+        })
       },
       ajaxRequest: function(url, type, data){
         return $.ajax({
@@ -62,10 +63,14 @@ setSearch()
       },
       cargarCasas: function(){
         var self = this;
-        self.ajaxRequest('/Filtros/casas', 'GET', {})
+        self.ajaxRequest('/Filtros/data', 'GET', {})
             .done(data=>{
               var $casas = $("#casas");
                $.each(data, (i,casa)=>{
+                 console.log(data)
+                 console.log(casa)
+                 console.log(casa.Id)
+                 console.log(casa.Direccion)
                  var htmlNew = self.$clasificadoTemp.html().replace(":Direccion:",casa.Direccion)
                                                         .replace(":Ciudad:",casa.Ciudad)
                                                         .replace(":Telefono:",casa.Telefono)

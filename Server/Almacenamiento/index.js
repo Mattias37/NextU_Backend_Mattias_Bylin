@@ -6,10 +6,10 @@ var path = require('path')
     module.exports = {
       getInfo: function(dataType){
         var dataPath = path.join(__dirname, './data.json');
-        return new Promise( function(res, rej){
+        return new Promise( function(resolve, reject){
           fs.readFile(dataPath, 'utf8', function(err, readInfo){
-            if(err) rej(err)
-            res(JSON.parse(readInfo))
+            if(err) reject(err)
+            resolve(JSON.parse(readInfo))
           })
         })
       }
