@@ -9,8 +9,9 @@ var bodyParser = require('body-parser')
     Almacenamiento = require('../Almacenamiento')
 //Filtrar las ciudades de get info de almacenamiento que a su vez traen la info de data.json
 Router.get("/ciudades", function(req, res){
-  Almacenamiento.getInfo('ciudades')
+  Almacenamiento.getInfo('ciudades').then(console.log('ciudad bro'))
                 .then(function(ciudades){
+                  console.log('CIUDADES!!!')
                   var ciudadesUnique = [];
                   ciudades.forEach(function(o){
                     if(ciudadesUnique.indexOf(o.Ciudad)<0){
@@ -29,7 +30,6 @@ Router.get("/data", (req, res)=>{
   Almacenamiento.getInfo('data')
           .then(casas=>{
             res.json(casas)
-            console.log('Exito casas')
           })
           .catch(error=>{
             res.sendStatus(500).json(error);

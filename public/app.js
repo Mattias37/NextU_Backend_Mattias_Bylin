@@ -60,7 +60,16 @@ setSearch();
       cargaCiudades: function(){
         var self = this;
         self.ajaxRequest('/Filtros/ciudades', 'GET', {})
-            .done()
+            .done(function(data){
+              console.log(data);
+
+              $.each(data, function(i, ciudad){
+                $('#ciudad').append(`<option value="${ciudad}">${ciudad}</option>`);
+                var $ciudades = $("#ciudad");
+              })
+            }).fail(function(err){
+              console.log(err);
+            })
       },
       cargarCasas: function(){
         var self = this;
@@ -113,6 +122,9 @@ setSearch();
              })
 
             })
+            .fail(function(err){
+              console.log(err);
+            });
 
       }
     }
