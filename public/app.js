@@ -38,7 +38,8 @@ setSearch();
         $("div[name='clasificado']").empty("");
         $("#buscar").click(function(){
           var ciudad = $("#ciudad").val();
-          var filter = {Ciudad: ciudad, /*Tipo: tipo, Precio: precio*/}
+          var precio = $('#rangoPrecio').val();
+          var filter = {Ciudad: ciudad, /*Tipo: tipo,*/ Precio: precio}
           self.customSearch(filter);
         })
         $("#tipo, #ciudad, #rangoPrecio").change(()=>{
@@ -99,6 +100,14 @@ setSearch();
                    $casas.append( $control );
                  }else {
                    console.log('filter no es undefined')
+                   var show = (filter.Ciudad ===undefined || filter.Ciudad =="" || filter.Ciudad == casa.Ciudad);
+                   var precio = filter.Precio.split(";");
+                   var precioCasa = casa.Precio.replace("$","").replace(",","");
+                   var show = show && ( precioCasa >= precio[0] && precioCasa <= precio[1]);
+                   console.log(`Ciudad:${filter.Ciudad}, Tipo: ${filter.Tipo}, Precio: ${precio}, precioCasa: ${precioCasa}, Show: ${show}`);
+                   if (show) {
+                     $casas.append( $control );
+                   }
                  }
 
              })
