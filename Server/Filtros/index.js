@@ -25,3 +25,15 @@ Router.get("/ciudades", function(req, res){
                 })
 
 })
+Router.get("/casas", (req, res)=>{
+  //res.json([ {"ciudad":"bogota"}, {"ciudad":"Cali"} ]);
+  Storage.getData('casas')
+          .then(casas=>{
+            res.json(casas)
+          })
+          .catch(error=>{
+            res.sendStatus(500).json(error);
+          })
+})
+
+module.exports = Router;
